@@ -104,6 +104,19 @@ def variancia (qtde_amigos):
 def desvio_padrao (qtde_amigos):
   return math.sqrt(variancia(qtde_amigos))
 
+#1 Escreva uma função que constrói um histograma
+#  que mostra a quantidade de amigos que pessoas de 
+# cada sexo têm.
+
+def gera_sexo():
+  qtde_usuarios_na_rede = quantidade_de_usuarios_na_rede()
+  amizades = gera_amizades(1000, qtde_usuarios_na_rede)
+  qtde_amigos = quantidade_de_amigos(amizades)
+  gera_histograma_contagem_amigos(qtde_amigos, qtde_usuarios_na_rede)
+
+
+def amigos_por_sexo():
+
 
 def main ():
   #mostra_primeiro_e_segundo_maiores_test()
