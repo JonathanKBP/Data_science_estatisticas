@@ -202,25 +202,20 @@ def desvio_e_variancia_padrao_masculino_vinte_e_dois_anos():
   sexo = define_sexo(qtde_usuarios_na_rede)
   users = []
   for i in range(qtde_usuarios_na_rede):
-    if sexo[i] == 'masculino' and idades[i] >= 22:
+    if sexo[i] == 'masculino' and idades[i] >= idade_maxima:
       users.append(idades[i])
   a = Counter (i for i in users)
-  print("desvio")
   desvio = desvio_padrao(a)
-  print(desvio)
-  print("variancia")
   vari = variancia(a)
-  print(vari)
-
+  return 'variancia = {vari}\ndesvio padrão = {desvio}'.format(vari=vari, desvio=desvio)
 
 def main ():
   #mostra_primeiro_e_segundo_maiores_test()
   #media_qtde_amigos_test()
   #gera_histograma_contagem_amigos_test()
-  #print(conta_amizade_sexo(gera_amizades(1000, 100), define_sexo(100)))
-  #histograma_sexo_das_amizades_test()
-  #histograma_quantidade_de_amigos_por_idade_test()
-  desvio_padrao_masculino_vinte_e_dois_anos()
+  histograma_sexo_das_amizades_test()
+  histograma_quantidade_de_amigos_por_idade_test()
+  print(desvio_e_variancia_padrao_masculino_vinte_e_dois_anos())
   
   
 main()
