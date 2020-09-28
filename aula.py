@@ -191,10 +191,11 @@ def histograma_quantidade_de_amigos_por_idade_test():
   amizade_idade = troca_chave(qtde_de_amigos, idades)
   histograma_quantidade_de_amigos_por_idade(amizade_idade, qtde_usuarios_na_rede, idade_maxima, idade_minima)
 
-"""3
+"""3 Escreva uma função que calcula a variância e o desvio padrão da idade das 
+pessoas do sexomasculino que tenham pelo menos 22 anos
 """
 
-def desvio_padrao_masculino_vinte_e_dois_anos():
+def desvio_e_variancia_padrao_masculino_vinte_e_dois_anos():
   idade_maxima = 22
   qtde_usuarios_na_rede = quantidade_de_usuarios_na_rede()
   idades = define_idade(qtde_usuarios_na_rede)
@@ -204,10 +205,13 @@ def desvio_padrao_masculino_vinte_e_dois_anos():
     if sexo[i] == 'masculino' and idades[i] >= 22:
       users.append(idades[i])
   a = Counter (i for i in users)
+  print("desvio")
   desvio = desvio_padrao(a)
   print(desvio)
+  print("variancia")
+  vari = variancia(a)
+  print(vari)
 
-  
 
 def main ():
   #mostra_primeiro_e_segundo_maiores_test()
@@ -217,5 +221,6 @@ def main ():
   #histograma_sexo_das_amizades_test()
   #histograma_quantidade_de_amigos_por_idade_test()
   desvio_padrao_masculino_vinte_e_dois_anos()
+  
   
 main()
