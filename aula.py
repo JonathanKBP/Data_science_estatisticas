@@ -29,7 +29,6 @@ def quantidade_de_amigos (amizades):
 
 def gera_histograma_contagem_amigos(quantidade_de_amigos, qtde_usuarios_na_rede):
   xs = range(qtde_usuarios_na_rede)
-  print(xs)
   ys = [quantidade_de_amigos[x] for x in xs]
   plt.bar(xs, ys)
   plt.axis ([0, qtde_usuarios_na_rede, 0, qtde_usuarios_na_rede /4])
@@ -166,11 +165,37 @@ def define_idade(quantidade_de_usuarios_na_rede):
     idade_usuario.append(random.randint(12, 120))
   return idade_usuario 
 
+def troca_chave(quantidade_de_amigos, idades):
+  chave_trocada= {}
+  for x in quantidade_de_amigos:
+    chave_trocada[idades[x]] = quantidade_de_amigos[x]
+  return Counter(chave_trocada)
+
+def histograma_quantidade_de_amigos_por_idade(quantidade_de_amigos, qtde_usuarios_na_rede, idade_maxima, idade_minima):
+  xs = range(idade_minima, idade_maxima)
+  ys = [quantidade_de_amigos[x] for x in xs]
+  plt.bar(xs, ys)
+  plt.axis ([10, idade_maxima, 0, qtde_usuarios_na_rede /4])
+  plt.title("Histograma da Contagem de Amigos pela Idade")
+  plt.xlabel ("# idade")
+  plt.ylabel ("# de amigos")
+  plt.show()
+
+def histograma_quantidade_de_amigos_por_idade_test():
+  idade_minima = 12
+  idade_maxima = 120
+  qtde_usuarios_na_rede = quantidade_de_usuarios_na_rede()
+  idades = define_idade(qtde_usuarios_na_rede)
+  amizades = gera_amizades(1000, qtde_usuarios_na_rede)
+  qtde_de_amigos = quantidade_de_amigos(amizades)
+  amizade_idade = troca_chave(qtde_de_amigos, idades)
+  histograma_quantidade_de_amigos_por_idade(amizade_idade, qtde_usuarios_na_rede, idade_maxima, idade_minima)
+
 def main ():
   #mostra_primeiro_e_segundo_maiores_test()
   #media_qtde_amigos_test()
   #gera_histograma_contagem_amigos_test()
   #print(conta_amizade_sexo(gera_amizades(1000, 100), define_sexo(100)))
   histograma_sexo_das_amizades_test()
-  print(define_idade(100))
+  histograma_quantidade_de_amigos_por_idade_test()
 main()
