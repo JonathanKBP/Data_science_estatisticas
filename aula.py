@@ -212,6 +212,75 @@ def desvio_e_variancia_padrao_masculino_vinte_e_dois_anos():
   vari = variancia(a)
   print(vari)
 
+def variance (v):
+  mean = sum(v) / len(v)
+  return[v_i - mean for v_i in v]
+
+def dot (v, w):
+  #v = [1, 2, 5]
+  #w = [3, 2, 1]
+  #dot (v, w) = 1 * 3 + 2 * 2 + 5 * 1 = 12
+  return sum([v_i * w_i for v_i, w_i in zip (v, w)])
+
+def covariance (x, y):
+  n = len(x)
+  return dot (variance(x), variance(y)) / (n - 1)
+############  ATIVIDADE #############
+"""
+1 Escreva uma função que calcula a covariância entre idade e número de amigos.
+"""
+def covariance_idade_num_amigos ():
+  qtde_usuarios_na_rede = quantidade_de_usuarios_na_rede()
+  idades = define_idade(qtde_usuarios_na_rede)
+  amizades = gera_amizades(1000, qtde_usuarios_na_rede)
+  num_amigos = quantidade_de_amigos(amizades)
+  print (f'covariancia: {covariance(idades, num_amigos)}')
+  
+def sum_of_squares (v):
+  return dot (v, v)
+
+"""
+2 - Escreva uma função que calcula a correlação entre idade e número de amigos.
+"""
+def correlation (x, y):
+  desvio_padrao_x = math.sqrt (sum_of_squares (variance(x)) / (len(x) - 1))
+  desvio_padrao_y = math.sqrt(sum_of_squares(variance(y)) / (len(y) - 1))
+  if desvio_padrao_x > 0 and desvio_padrao_y > 0:
+    return covariance(x, y) / desvio_padrao_y / desvio_padrao_x
+  else:
+    return 0
+
+def correlation_idade_num_amigos ():
+  qtde_usuarios_na_rede = quantidade_de_usuarios_na_rede()
+  idades = define_idade(qtde_usuarios_na_rede)
+  amizades = gera_amizades(1000, qtde_usuarios_na_rede)
+  num_amigos = quantidade_de_amigos(amizades)
+  print (f'correlation: {correlation(idades, num_amigos)}')
+  
+"""
+3 Escreva uma função que devolve uma tupla de duas listas. A primeira 
+lista contém quantidadesde amigos que cada usuário da rede tem. A segunda, 
+quantidades de minutos passados em médiana rede por cada usuário. Cada lista 
+tem tamanho n, sendo n um valor recebido como parâmetro.Os dados devem ser 
+gerados aleatoriamente. Faça três versões.
+"""
+def correlacao_um(x, y):
+  pass
+
+def correlacao_menos_um(x, y):
+  pass
+
+def correlacao_zero(x, y):
+  pass
+
+
+"""
+  4 Escreva uma função de teste que mostra que os dados gerados 
+  no Exercício 3 estão de acordocom o solicitado.
+"""
+def verifica_corelacao():
+  pass
+
 
 def main ():
   #mostra_primeiro_e_segundo_maiores_test()
@@ -220,7 +289,9 @@ def main ():
   #print(conta_amizade_sexo(gera_amizades(1000, 100), define_sexo(100)))
   #histograma_sexo_das_amizades_test()
   #histograma_quantidade_de_amigos_por_idade_test()
-  desvio_padrao_masculino_vinte_e_dois_anos()
+  #desvio_padrao_masculino_vinte_e_dois_anos()
+  covariance_idade_num_amigos()
+  correlation_idade_num_amigos()
   
   
 main()
