@@ -205,17 +205,121 @@ def desvio_e_variancia_padrao_masculino_vinte_e_dois_anos():
     if sexo[i] == 'masculino' and idades[i] >= idade_maxima:
       users.append(idades[i])
   a = Counter (i for i in users)
+  print("desvio")
   desvio = desvio_padrao(a)
   vari = variancia(a)
   return 'variancia = {vari}\ndesvio padrão = {desvio}'.format(vari=vari, desvio=desvio)
+
+def variance (v):
+  mean = sum(v) / len(v)
+  return[v_i - mean for v_i in v]
+
+def dot (v, w):
+  #v = [1, 2, 5]
+  #w = [3, 2, 1]
+  #dot (v, w) = 1 * 3 + 2 * 2 + 5 * 1 = 12
+  return sum([v_i * w_i for v_i, w_i in zip (v, w)])
+
+def covariance (x, y):
+  n = len(x)
+  return dot (variance(x), variance(y)) / (n - 1)
+
+############  ATIVIDADE #############
+"""
+1 Escreva uma função que calcula a covariância entre idade e número de amigos.
+"""
+def covariance_idade_num_amigos ():
+  qtde_usuarios_na_rede = quantidade_de_usuarios_na_rede()
+  idades = define_idade(qtde_usuarios_na_rede)
+  amizades = gera_amizades(1000, qtde_usuarios_na_rede)
+  num_amigos = quantidade_de_amigos(amizades)
+  print (f'covariancia: {covariance(idades, num_amigos)}')
+  
+def sum_of_squares (v):
+  return dot (v, v)
+
+"""
+2 - Escreva uma função que calcula a correlação entre idade e número de amigos.
+"""
+def correlation (x, y):
+  desvio_padrao_x = math.sqrt (sum_of_squares (variance(x)) / (len(x) - 1))
+  desvio_padrao_y = math.sqrt(sum_of_squares(variance(y)) / (len(y) - 1))
+  if desvio_padrao_x > 0 and desvio_padrao_y > 0:
+    return covariance(x, y) / desvio_padrao_y / desvio_padrao_x
+  else:
+    return 0
+
+def correlation_idade_num_amigos ():
+  qtde_usuarios_na_rede = quantidade_de_usuarios_na_rede()
+  idades = define_idade(qtde_usuarios_na_rede)
+  amizades = gera_amizades(1000, qtde_usuarios_na_rede)
+  num_amigos = quantidade_de_amigos(amizades)
+  print (f'correlation: {correlation(idades, num_amigos)}')
+  
+"""
+3 Escreva uma função que devolve uma tupla de duas listas. A primeira 
+lista contém quantidadesde amigos que cada usuário da rede tem. A segunda, 
+quantidades de minutos passados em médiana rede por cada usuário. Cada lista 
+tem tamanho n, sendo n um valor recebido como parâmetro.Os dados devem ser 
+gerados aleatoriamente. Faça três versões.
+"""
+
+def correlacao_um(n):
+  rede = ([],[])
+  i = 0
+  while (i < n):
+    rede[0].append(random.randint(1, 1000))
+    rede[1].append(random.randint(rede[0][i]//3, rede[0][i]))
+    i+=1
+  resultado = correlation(rede[0], rede[1]) 
+  return resultado
+
+def correlacao_menos_um(n):
+  rede = ([],[])
+  i = 0
+  while (i < n):
+    rede[0].append(random.randint(1, 1000))
+    rede[1].append(-(random.randint(0, rede[0][i])))
+    i+=1
+  resultado = correlation(rede[0], rede[1]) 
+  return resultado
+
+def correlacao_zero(n):
+  rede = ([],[])
+  i = 0
+  while (i < n):
+    rede[0].append(random.randint(1, 1000))
+    if (i%2==0):
+      rede[1].append((random.randint(rede[0][i]*2, rede[0][i]**2)))
+    else:
+      rede[1].append((random.randint(0, rede[0][i]//2)))
+    i+=1
+  resultado = correlation(rede[0], rede[1]) 
+  return resultado
+
+"""
+  4 Escreva uma função de teste que mostra que os dados gerados 
+  no Exercício 3 estão de acordocom o solicitado.
+"""
+def verifica_corelacao():
+  n = 100
+  print(correlacao_um(n))
+  print(correlacao_menos_um(n))
+  print(correlacao_zero(n))
+
 
 def main ():
   #mostra_primeiro_e_segundo_maiores_test()
   #media_qtde_amigos_test()
   #gera_histograma_contagem_amigos_test()
-  histograma_sexo_das_amizades_test()
-  histograma_quantidade_de_amigos_por_idade_test()
-  print(desvio_e_variancia_padrao_masculino_vinte_e_dois_anos())
+  #print(conta_amizade_sexo(gera_amizades(1000, 100), define_sexo(100)))
+  #histograma_sexo_das_amizades_test()
+  #histograma_quantidade_de_amigos_por_idade_test()
+  #desvio_padrao_masculino_vinte_e_dois_anos()
+  covariance_idade_num_amigos()
+  correlation_idade_num_amigos()
+  verifica_corelacao()
+
   
   
 main()
