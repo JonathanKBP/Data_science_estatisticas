@@ -205,7 +205,6 @@ def desvio_e_variancia_padrao_masculino_vinte_e_dois_anos():
     if sexo[i] == 'masculino' and idades[i] >= idade_maxima:
       users.append(idades[i])
   a = Counter (i for i in users)
-  print("desvio")
   desvio = desvio_padrao(a)
   vari = variancia(a)
   return 'variancia = {vari}\ndesvio padrão = {desvio}'.format(vari=vari, desvio=desvio)
